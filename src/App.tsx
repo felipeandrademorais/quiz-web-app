@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./contexts/AuthContext";
 import { routes } from "./routes";
 
@@ -24,6 +26,7 @@ function App() {
                 </Router>
             </AuthProvider>
             <ReactQueryDevtools initialIsOpen={false} />
+            <ToastContainer position="top-right" autoClose={5000} />
         </QueryClientProvider>
     );
 }

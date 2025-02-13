@@ -7,6 +7,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 const registerSchema = z
     .object({
+        username: z.string().min(3, "Username must be at least 3 characters"),
         email: z.string().email("Invalid email address"),
         password: z.string().min(6, "Password must be at least 6 characters"),
         confirmPassword: z
@@ -36,7 +37,7 @@ export default function Register() {
     const onSubmit = async (data: RegisterFormData) => {
         try {
             setError("");
-            await registerUser(data.email, data.password);
+            await registerUser(data.username, data.email, data.password);
             navigate("/login");
         } catch (err) {
             setError("Registration failed. Please try again.");
@@ -58,6 +59,27 @@ export default function Register() {
                     <div className="rounded-md shadow-sm -space-y-px">
                         <div>
                             <label
+                                htmlFor="username"
+                                className="form-label sr-only"
+                            >
+                                Username
+                            </label>
+                            <input
+                                id="username"
+                                type="text"
+                                autoComplete="username"
+                                {...register("username")}
+                                className="input-field rounded-t-md"
+                                placeholder="Username"
+                            />
+                            {errors.username && (
+                                <p className="error-message">
+                                    {errors.username.message}
+                                </p>
+                            )}
+                        </div>
+                        <div>
+                            <label
                                 htmlFor="email"
                                 className="form-label sr-only"
                             >
@@ -68,7 +90,7 @@ export default function Register() {
                                 type="email"
                                 autoComplete="email"
                                 {...register("email")}
-                                className="input-field rounded-t-md"
+                                className="input-field"
                                 placeholder="Email address"
                             />
                             {errors.email && (

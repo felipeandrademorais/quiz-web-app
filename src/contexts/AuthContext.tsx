@@ -5,6 +5,7 @@ import {
     useEffect,
     ReactNode,
 } from "react";
+import { toast } from "react-toastify";
 import api from "../config/axios";
 
 interface AuthContextType {
@@ -16,7 +17,11 @@ interface AuthContextType {
         rememberMe: boolean
     ) => Promise<void>;
     logout: () => void;
-    register: (email: string, password: string) => Promise<void>;
+    register: (
+        username: string,
+        email: string,
+        password: string
+    ) => Promise<void>;
     forgotPassword: (email: string) => Promise<void>;
 }
 
@@ -62,8 +67,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
             setUser(userData);
             setIsAuthenticated(true);
-        } catch (error) {
-            throw new Error("Login failed");
+        } catch (error: any) {
+            if (error.response?.data?.message) {
+                const messages = Array.isArray(error.response.data.message)
+                    ? error.response.data.message
+                    : [error.response.data.message];
+                messages.forEach((msg: string) => toast.error(msg));
+            } else {
+                toast.error("Login failed. Please try again.");
+            }
+            throw error;
         }
     };
 
@@ -74,19 +87,42 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setIsAuthenticated(false);
     };
 
-    const register = async (email: string, password: string) => {
+    const register = async (
+        username: string,
+        email: string,
+        password: string
+    ) => {
         try {
-            await api.post("/auth/register", { email, password });
-        } catch (error) {
-            throw new Error("Registration failed");
+            await api.post("/auth/register", { username, email, password });
+            toast.success("Account created successfully! Please login.");
+        } catch (error: any) {
+            if (error.response?.data?.message) {
+                const messages = Array.isArray(error.response.data.message)
+                    ? error.response.data.message
+                    : [error.response.data.message];
+                messages.forEach((msg: string) => toast.error(msg));
+            } else {
+                toast.error("Registration failed. Please try again.");
+            }
+            throw error;
         }
     };
 
     const forgotPassword = async (email: string) => {
         try {
             await api.post("/auth/forgot-password", { email });
-        } catch (error) {
-            throw new Error("Password recovery request failed");
+        } catch (error: any) {
+            if (error.response?.data?.message) {
+                const messages = Array.isArray(error.response.data.message)
+                    ? error.response.data.message
+                    : [error.response.data.message];
+                messages.forEach((msg: string) => toast.error(msg));
+            } else {
+                toast.error(
+                    "Password recovery request failed. Please try again."
+                );
+            }
+            throw error;
         }
     };
 
