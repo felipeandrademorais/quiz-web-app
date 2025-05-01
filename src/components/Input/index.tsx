@@ -1,17 +1,18 @@
 import { InputHTMLAttributes } from "react";
-import { UseFormRegister, FieldValues } from "react-hook-form";
+import { UseFormRegister, Path } from "react-hook-form";
 import * as Label from "@radix-ui/react-label";
 import { Text } from "@radix-ui/themes";
 
-export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
-    name: string;
+export interface TextInputProps<TFormValues extends { [key: string]: unknown }>
+    extends Omit<InputHTMLAttributes<HTMLInputElement>, "name"> {
+    name: Path<TFormValues>;
     label?: string;
-    register: UseFormRegister<FieldValues>;
+    register: UseFormRegister<TFormValues>;
     placeholder?: string;
     error?: string;
 }
 
-export function TextInput({
+export function TextInput<TFormValues extends { [key: string]: unknown }>({
     name,
     label,
     register,
@@ -19,7 +20,7 @@ export function TextInput({
     error,
     className = "",
     ...rest
-}: TextInputProps) {
+}: TextInputProps<TFormValues>) {
     return (
         <div className="flex flex-col gap-1">
             {label && (

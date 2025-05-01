@@ -1,12 +1,11 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 import { useAuth } from "../../../../contexts/AuthContext";
 import { LoginFormData, loginSchema } from "../validation/loginSchema";
 
 export function useLoginViewModel() {
-    const [error, setError] = useState("");
     const { login } = useAuth();
     const navigate = useNavigate();
 
@@ -20,11 +19,11 @@ export function useLoginViewModel() {
 
     const onSubmit = async (data: LoginFormData) => {
         try {
-            setError("");
             await login(data.username, data.password, data.rememberMe);
             navigate("/");
         } catch (err) {
-            setError("Invalid username or password");
+            console.log(err);
+            toast.error("Email ou senha inválidos");
         }
     };
 
@@ -33,7 +32,6 @@ export function useLoginViewModel() {
         handleSubmit,
         onSubmit,
         isSubmitting,
-        error,
         errors,
     };
 }

@@ -1,15 +1,10 @@
-import {
-    createContext,
-    useContext,
-    useState,
-    useEffect,
-    ReactNode,
-} from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import api from "../config/axios";
+import { User } from "../interfaces/auth";
 
 interface AuthContextType {
-    user: any;
+    user: User | null;
     isAuthenticated: boolean;
     login: (
         username: string,

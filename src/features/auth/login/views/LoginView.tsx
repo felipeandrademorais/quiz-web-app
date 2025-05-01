@@ -5,7 +5,7 @@ import { useLoginViewModel } from "../view-models/useLoginViewModel";
 import { Button } from "@radix-ui/themes";
 
 export default function LoginView() {
-    const { register, handleSubmit, onSubmit, isSubmitting, error, errors } =
+    const { register, handleSubmit, onSubmit, isSubmitting, errors } =
         useLoginViewModel();
 
     return (
@@ -13,7 +13,7 @@ export default function LoginView() {
             <div className="max-w-md w-full space-y-8">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Sign in to your account
+                        Acessar sua conta
                     </h2>
                 </div>
                 <form
@@ -25,8 +25,8 @@ export default function LoginView() {
                             name="username"
                             register={register}
                             type="text"
-                            label="Username"
-                            placeholder="Username"
+                            label="Email"
+                            placeholder="Email"
                             autoComplete="username"
                             error={errors.username?.message}
                         />
@@ -34,8 +34,8 @@ export default function LoginView() {
                             name="password"
                             register={register}
                             type="password"
-                            label="Password"
-                            placeholder="Password"
+                            label="Senha"
+                            placeholder="Senha"
                             autoComplete="current-password"
                             error={errors.password?.message}
                         />
@@ -44,7 +44,7 @@ export default function LoginView() {
                     <div className="flex items-center justify-between">
                         <CheckboxInput
                             name="rememberMe"
-                            label="Remember me"
+                            label="Lembrar-me"
                             register={register}
                         />
 
@@ -53,16 +53,10 @@ export default function LoginView() {
                                 to="/forgot-password"
                                 className="font-medium text-blue-600 hover:text-blue-500"
                             >
-                                Forgot your password?
+                                Esqueceu sua senha?
                             </Link>
                         </div>
                     </div>
-
-                    {error && (
-                        <div className="text-red-500 text-sm text-center">
-                            {error}
-                        </div>
-                    )}
 
                     <div>
                         <Button
@@ -70,7 +64,7 @@ export default function LoginView() {
                             disabled={isSubmitting}
                             className="w-full"
                         >
-                            {isSubmitting ? "Signing in..." : "Sign in"}
+                            {isSubmitting ? "Acessando..." : "Acessar"}
                         </Button>
                     </div>
 
@@ -79,7 +73,7 @@ export default function LoginView() {
                             to="/register"
                             className="font-medium text-blue-600 hover:text-blue-500"
                         >
-                            Don't have an account? Sign up
+                            Não tem uma conta? Cadastre-se
                         </Link>
                     </div>
                 </form>
