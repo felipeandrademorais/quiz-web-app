@@ -1,10 +1,10 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import ForgotPassword from "../pages/ForgotPassword";
-import Home from "../pages/Home";
-import QuizSession from "../pages/QuizSession";
+import { LoginView } from "../features/auth/login";
+import { RegisterView } from "../features/auth/register";
+import { ForgotPasswordView } from "../features/auth/forgot-password";
+import { HomeView } from "../features/home";
+import { QuizSessionView } from "../features/quiz-session";
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
     const { isAuthenticated, isLoading } = useAuth();
@@ -50,7 +50,7 @@ export const routes = [
         path: "/login",
         element: (
             <PublicRoute>
-                <Login />
+                <LoginView />
             </PublicRoute>
         ),
     },
@@ -58,7 +58,7 @@ export const routes = [
         path: "/register",
         element: (
             <PublicRoute>
-                <Register />
+                <RegisterView />
             </PublicRoute>
         ),
     },
@@ -66,7 +66,7 @@ export const routes = [
         path: "/forgot-password",
         element: (
             <PublicRoute>
-                <ForgotPassword />
+                <ForgotPasswordView />
             </PublicRoute>
         ),
     },
@@ -74,7 +74,7 @@ export const routes = [
         path: "/",
         element: (
             <PrivateRoute>
-                <Home />
+                <HomeView />
             </PrivateRoute>
         ),
     },
@@ -82,7 +82,7 @@ export const routes = [
         path: "/seasons/:seasonId",
         element: (
             <PrivateRoute>
-                <QuizSession />
+                <QuizSessionView />
             </PrivateRoute>
         ),
     },
