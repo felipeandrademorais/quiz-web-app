@@ -33,7 +33,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (token) {
             api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             setIsAuthenticated(true);
-            // Fetch user data if needed
         }
         setIsLoading(false);
     }, []);
@@ -44,6 +43,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         rememberMe: boolean
     ) => {
         try {
+            console.log("login", username, password, rememberMe);
             const response = await api.post("/auth/login", {
                 username,
                 password,

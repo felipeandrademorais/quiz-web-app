@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { LoginModel } from "../models/LoginModel";
 
 export const loginSchema = z.object({
     username: z.string().min(1, "Username is required"),

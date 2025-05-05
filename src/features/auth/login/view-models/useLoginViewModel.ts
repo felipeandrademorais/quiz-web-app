@@ -19,6 +19,7 @@ export function useLoginViewModel() {
 
     const onSubmit = async (data: LoginFormData) => {
         try {
+            console.log("onSubmit", data);
             await login(data.username, data.password, data.rememberMe);
             navigate("/");
         } catch (err) {

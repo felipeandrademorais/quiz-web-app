@@ -4,15 +4,8 @@ import { useForgotPasswordViewModel } from "../view-models/useForgotPasswordView
 import { Button } from "@radix-ui/themes";
 
 export default function ForgotPasswordView() {
-    const {
-        register,
-        handleSubmit,
-        onSubmit,
-        isSubmitting,
-        error,
-        success,
-        errors,
-    } = useForgotPasswordViewModel();
+    const { register, handleSubmit, onSubmit, isSubmitting, errors } =
+        useForgotPasswordViewModel();
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -41,17 +34,6 @@ export default function ForgotPasswordView() {
                             error={errors.email?.message}
                         />
                     </div>
-
-                    {error && (
-                        <div className="text-red-500 text-sm text-center">
-                            {error}
-                        </div>
-                    )}
-                    {success && (
-                        <div className="text-green-600 text-sm text-center">
-                            {success}
-                        </div>
-                    )}
 
                     <div>
                         <Button

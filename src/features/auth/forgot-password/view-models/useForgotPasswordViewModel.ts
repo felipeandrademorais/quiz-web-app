@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../../../../contexts/AuthContext";
@@ -8,8 +8,6 @@ import {
 } from "../validation/forgotPasswordSchema";
 
 export function useForgotPasswordViewModel() {
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
     const { forgotPassword } = useAuth();
 
     const {
@@ -22,14 +20,10 @@ export function useForgotPasswordViewModel() {
 
     const onSubmit = async (data: ForgotPasswordFormData) => {
         try {
-            setError("");
-            setSuccess("");
             await forgotPassword(data.email);
-            setSuccess(
-                "Password reset instructions have been sent to your email."
-            );
+            toast.success("Email de recuperação enviado com sucesso");
         } catch {
-            setError("Failed to reset password. Please try again.");
+            toast.error("Falha ao enviar email de recuperação");
         }
     };
 
@@ -38,8 +32,6 @@ export function useForgotPasswordViewModel() {
         handleSubmit,
         onSubmit,
         isSubmitting,
-        error,
-        success,
         errors,
     };
 }
